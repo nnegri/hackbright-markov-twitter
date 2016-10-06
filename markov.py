@@ -68,16 +68,25 @@ def tweet(chains):
         access_token_key=os.environ['TWITTER_ACCESS_TOKEN_KEY'],
         access_token_secret=os.environ['TWITTER_ACCESS_TOKEN_SECRET'])
     
-    print api.VerifyCredentials()
-
+    #print api.VerifyCredentials()
+    print dir(api)
     while True:
-        tweet = make_text(chains)[:140]
-        print tweet
+
+        recent_tweet = api.GetStatus() # WHAT 2 ARGS?
+        print recent_tweet
+
+        tweet_text = make_text(chains)[:140]
+        print tweet_text
+        status = api.PostUpdate(tweet_text)
 
         user_input = raw_input("Enter to tweet again [q to quit] > ")
 
         if user_input == "q":
             break
+
+    #statuses = api.GetUserTimeline(screen_name='nMarkovn')
+    #print([s.text for s in statuses])
+    #print statuses[-1].text
 
 # Get the filenames from the user through a command line prompt, ex:
 # python markov.py green-eggs.txt shakespeare.txt
